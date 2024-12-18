@@ -1,6 +1,7 @@
 package com.example.ucp2.ui.view.MataKuliah
 
 import com.example.ucp2.data.entity.Dosen
+import com.example.ucp2.repository.RepositoryDosen
 
 
 data class DosenFormErrorState(
@@ -23,6 +24,30 @@ private fun validateFields(): Boolean {
     )
     uiState = uiState.copy(isEntryValid = errorState)
     return errorState.isValid()
+}
+
+fun saveData() {
+    val currentEvent = uiState.dosenEvent
+    if (validateFields()) {
+        viewModelScope.launch {
+            try {
+                RepositoryDosen.insertDosen(currentEvent.toDosenEntity())
+                uiState = uiState.copy(
+                    snackbarMessage = "Data berhasil disimpan",
+                    dosenEvent = DosenEvent(), // Reset input form
+                    isEntryValid = DosenFormErrorState() // reset error state
+                )
+            } catch (e: Exception) {
+                uiState = uiState.copy(
+                    snackbarMessage = "Data gagal disimpan"
+                )
+            }
+        }
+    } else {
+        uiState = uiState.copy(
+            snackbarMessage = "Input tidak valid. periksa kembali data anda"
+        )
+    }
 }
 
 
