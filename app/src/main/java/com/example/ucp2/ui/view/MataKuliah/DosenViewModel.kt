@@ -50,6 +50,11 @@ fun saveData() {
     }
 }
 
+fun resetSnackBarMessage() {
+    uiState = uiState.copy(snackbarMessage = null)
+}
+
+
 
 data class DosenUiState(
     val dosenEvent: DosenEvent = DosenEvent(),
