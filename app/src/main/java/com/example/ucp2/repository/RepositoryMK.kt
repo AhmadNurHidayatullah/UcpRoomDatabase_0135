@@ -12,5 +12,5 @@ interface RepositoryMK {
 
     suspend fun deleteMK(matakuliah: Matakuliah)
 
-    suspend fun UpdateMK(matakuliah: Matakuliah)
+    suspend fun updateMK(matakuliah: Matakuliah)
 }
