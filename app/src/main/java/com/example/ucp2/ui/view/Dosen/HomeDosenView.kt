@@ -22,11 +22,12 @@ import com.example.ucp2.data.entity.Dosen
 import com.example.ucp2.ui.costumwidget.TopAppBar
 import com.example.ucp2.ui.viewmodel.dosen.HomeDosenViewModel
 import com.example.ucp2.ui.viewmodel.dosen.HomeUiState
+import com.example.ucp2.ui.viewmodel.dosen.PenyediaDosenViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun HomeDosenView(
-    viewModel: HomeDosenViewModel = viewModel(),
+    viewModel: HomeDosenViewModel = viewModel(factory = PenyediaDosenViewModel.Factory),
     onAddDosen: () -> Unit = {},
     onBack: () -> Unit,
     onDetailClick: (String) -> Unit = {},
