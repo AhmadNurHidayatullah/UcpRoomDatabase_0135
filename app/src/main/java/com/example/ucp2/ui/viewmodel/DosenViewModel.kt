@@ -1,4 +1,4 @@
-package com.example.ucp2.ui.view.MataKuliah
+package com.example.ucp2.ui.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
