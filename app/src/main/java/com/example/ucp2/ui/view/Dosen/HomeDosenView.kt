@@ -2,6 +2,8 @@ package com.example.ucp2.ui.view.Dosen
 
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Face
@@ -16,6 +18,18 @@ import androidx.compose.ui.unit.sp
 import com.example.ucp2.data.entity.Dosen
 
 
+@Composable
+fun ListDosen(
+    listDosen: List<Dosen>,
+    modifier: Modifier = Modifier,
+    onClick: (String) -> Unit = {}
+) {
+    LazyColumn(modifier = modifier) {
+        items(items = listDosen) { dosen ->
+            CardDosen(dosen = dosen, onClick = { onClick(dosen.NIDN) })
+        }
+    }
+}
 
 
 @Composable
