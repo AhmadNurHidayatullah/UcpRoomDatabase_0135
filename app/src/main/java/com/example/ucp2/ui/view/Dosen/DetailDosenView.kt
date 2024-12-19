@@ -17,13 +17,14 @@ import com.example.ucp2.data.entity.Dosen
 import com.example.ucp2.ui.costumwidget.TopAppBar
 import com.example.ucp2.ui.viewmodel.dosen.DetailDosenViewModel
 import com.example.ucp2.ui.viewmodel.dosen.DetailUiState
+import com.example.ucp2.ui.viewmodel.dosen.PenyediaDosenViewModel
 import com.example.ucp2.ui.viewmodel.dosen.toDosenEntity
 
 @Preview(showBackground = true)
 @Composable
 fun DetailDosenView(
     modifier: Modifier = Modifier,
-    viewModel: DetailDosenViewModel = viewModel(),
+    viewModel: DetailDosenViewModel = viewModel(factory = PenyediaDosenViewModel.Factory),
     onBack: () -> Unit = {},
 ) {
     Scaffold(
