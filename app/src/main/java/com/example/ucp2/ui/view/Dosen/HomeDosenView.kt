@@ -16,6 +16,53 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ucp2.data.entity.Dosen
+import com.example.ucp2.ui.viewmodel.dosen.HomeUiState
+import kotlinx.coroutines.launch
+
+
+@Composable
+fun BodyHomeDosenView(
+    homeUiState: HomeUiState,
+    onClick: (String) -> Unit = {},
+    modifier: Modifier = Modifier
+) {
+    val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    when {
+        homeUiState.isLoading -> {
+            Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        }
+        homeUiState.isError -> {
+            LaunchedEffect(homeUiState.errorMessage) {
+                homeUiState.errorMessage?.let { message ->
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar(message)
+                    }
+                }
+            }
+        }
+        homeUiState.listDosen.isEmpty() -> {
+            Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(
+                    text = "Tidak ada data dosen.",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        }
+        else -> {
+            ListDosen(
+                listDosen = homeUiState.listDosen,
+                onClick = onClick,
+                modifier = modifier
+            )
+        }
+    }
+}
 
 
 @Composable
