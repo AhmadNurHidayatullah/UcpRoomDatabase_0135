@@ -3,6 +3,14 @@ package com.example.ucp2.ui.viewmodel.matakuliah
 import com.example.ucp2.data.entity.Matakuliah
 
 
+
+data class MkUiState(
+    val matakuliahEvent: MatakuliahEvent = MatakuliahEvent(),
+    val isEntryValid: FormErrorState = FormErrorState(),
+    val snackbarMessage: String? = null
+)
+
+
 data class FormErrorState(
     val Kode: String? = null,
     val Nama: String? = null,
