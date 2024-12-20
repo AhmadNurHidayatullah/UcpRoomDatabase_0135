@@ -3,6 +3,20 @@ package com.example.ucp2.ui.viewmodel.matakuliah
 import com.example.ucp2.data.entity.Matakuliah
 
 
+data class FormErrorState(
+    val Kode: String? = null,
+    val Nama: String? = null,
+    val SKS: String? = null,
+    val Semester: String? = null,
+    val jenis: String? = null,
+    val DosenPengampu: String? = null
+) {
+    fun isValid(): Boolean {
+        return Kode == null && Nama == null && SKS == null &&
+                Semester == null && jenis == null && DosenPengampu == null
+    }
+}
+
 fun MatakuliahEvent.toMatakuliahEntity(): Matakuliah = Matakuliah (
     Kode = Kode,
     Nama = Nama,
