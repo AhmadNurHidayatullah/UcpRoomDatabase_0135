@@ -17,10 +17,11 @@ import com.example.ucp2.data.entity.Dosen
 import com.example.ucp2.ui.costumwidget.TopAppBar
 import com.example.ucp2.ui.viewmodel.dosen.DetailDosenViewModel
 import com.example.ucp2.ui.viewmodel.dosen.DetailUiState
+import com.example.ucp2.ui.viewmodel.dosen.DosenEvent
 import com.example.ucp2.ui.viewmodel.dosen.PenyediaDosenViewModel
 import com.example.ucp2.ui.viewmodel.dosen.toDosenEntity
 
-@Preview(showBackground = true)
+
 @Composable
 fun DetailDosenView(
     modifier: Modifier = Modifier,
@@ -75,7 +76,6 @@ fun BodyDetailDosen(
         }
 
         detailDosenUiState.detailUiEvent != null -> {
-            // Show existing data if available
             DataDetailDosen(
                 modifier = modifier,
                 dosen = detailDosenUiState.detailUiEvent.toDosenEntity()
@@ -83,7 +83,6 @@ fun BodyDetailDosen(
         }
 
         else -> {
-            // No data found
             Box(
                 modifier = modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -142,5 +141,16 @@ fun ItemDetailDosen(
             fontWeight = FontWeight.Bold
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewBodyDetailDosen() {
+    BodyDetailDosen(
+        detailDosenUiState = DetailUiState(
+            detailUiEvent = DosenEvent(
+            )
+        )
+    )
 }
 
