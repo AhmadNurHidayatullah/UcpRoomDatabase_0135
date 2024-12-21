@@ -19,21 +19,21 @@ class HomeMatakuliahViewModel(
     private val repositoryMK: RepositoryMK
 ) : ViewModel() {
 
-    val homeUiState: StateFlow<HomeUiState> = repositoryMK.getAllMatakuliah()
+    val homeUiState: StateFlow<homeMKUiState> = repositoryMK.getAllMatakuliah()
         .filterNotNull()
         .map {
-            HomeUiState(
+            homeMKUiState(
                 listMk = it.toList(),
                 isLoading = false,
             )
         }
         .onStart {
-            emit(HomeUiState(isLoading = true))
+            emit(homeMKUiState(isLoading = true))
             delay(900)
         }
         .catch {
             emit(
-                HomeUiState(
+                homeMKUiState(
                     isLoading = false,
                     isError =  true,
                     errorMessage = it.message ?: "Terjadi Kesalahan"
@@ -43,13 +43,13 @@ class HomeMatakuliahViewModel(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = HomeUiState(
+            initialValue = homeMKUiState(
                 isLoading = true,
             )
         )
 }
 
-data class HomeUiState(
+data class homeMKUiState(
     val listMk: List<Matakuliah> = listOf(),
     val isLoading: Boolean = false,
     val isError: Boolean = false,
