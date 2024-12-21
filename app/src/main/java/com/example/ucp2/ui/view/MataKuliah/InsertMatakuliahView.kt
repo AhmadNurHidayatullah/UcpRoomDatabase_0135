@@ -31,6 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.data.entity.Dosen
 import com.example.ucp2.ui.costumwidget.DynamicDropdownTextField
 import com.example.ucp2.ui.costumwidget.TopAppBar
+import com.example.ucp2.ui.navigation.AlamatNavigasi
 import com.example.ucp2.ui.viewmodel.dosen.HomeDosenViewModel
 import com.example.ucp2.ui.viewmodel.dosen.HomeUiState
 import com.example.ucp2.ui.viewmodel.dosen.PenyediaDosenViewModel
@@ -40,6 +41,10 @@ import com.example.ucp2.ui.viewmodel.matakuliah.MatakuliahEvent
 import com.example.ucp2.ui.viewmodel.matakuliah.MkUiState
 import com.example.ucp2.ui.viewmodel.matakuliah.PenyediaMatakuliahViewModel
 import kotlinx.coroutines.launch
+
+object DestinasiInsertMatakuliah : AlamatNavigasi {
+    override val route = "TambahMataKuliah"
+}
 
 @Composable
 fun InsertMatakuliahView(
