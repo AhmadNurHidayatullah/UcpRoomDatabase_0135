@@ -24,6 +24,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -31,14 +33,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.data.entity.Matakuliah
-import com.example.ucp2.ui.viewmodel.matakuliah.HomeMKUiState
+import com.example.ucp2.ui.viewmodel.matakuliah.HomeMkUiState
 import com.example.ucp2.ui.viewmodel.matakuliah.MataKuliahViewModel
 import com.example.ucp2.ui.viewmodel.matakuliah.PenyediaMatakuliahViewModel
 import kotlinx.coroutines.launch
-
 
 @Composable
 fun HomeMatakuliahView(
@@ -68,10 +68,10 @@ fun HomeMatakuliahView(
             }
         }
     ) { innerPadding ->
-        val homeUiState by viewModel.homeMKUiState.collectAsState()
+        val homeUiState by viewModel.homeMkUiState.collectAsState()
 
         BodyHomeMatakuliahView(
-            homeMKUiState = homeUiState,
+            homeMkUiState = homeUiState,
             onClick = {
                 onDetailClick(it)
             },
@@ -81,9 +81,10 @@ fun HomeMatakuliahView(
 }
 
 
+
 @Composable
 fun BodyHomeMatakuliahView(
-    homeMKUiState: HomeMKUiState,  // Perubahan parameter dari HomeUiState (berdasarkan kode Anda sebelumnya)
+    homeMkUiState: HomeMkUiState,
     onClick: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -91,7 +92,7 @@ fun BodyHomeMatakuliahView(
     val snackbarHostState = remember { SnackbarHostState() }
 
     when {
-        homeMKUiState.isLoading -> {
+        homeMkUiState.isLoading -> {
             Box(
                 modifier = modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -100,9 +101,9 @@ fun BodyHomeMatakuliahView(
             }
         }
 
-        homeMKUiState.isError -> {
-            LaunchedEffect(homeMKUiState.errorMessage) {
-                homeMKUiState.errorMessage?.let { message ->
+        homeMkUiState.isError -> {
+            LaunchedEffect(homeMkUiState.errorMessage) {
+                homeMkUiState.errorMessage?.let { message ->
                     coroutineScope.launch {
                         snackbarHostState.showSnackbar(message)
                     }
@@ -110,7 +111,7 @@ fun BodyHomeMatakuliahView(
             }
         }
 
-        homeMKUiState.listMk.isEmpty() -> {
+        homeMkUiState.listMk.isEmpty() -> {
             Box(
                 modifier = modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -126,7 +127,7 @@ fun BodyHomeMatakuliahView(
 
         else -> {
             ListMK(
-                listMK = homeMKUiState.listMk,
+                listMK = homeMkUiState.listMk,
                 onClick = {
                     onClick(it)
                     println(it)
