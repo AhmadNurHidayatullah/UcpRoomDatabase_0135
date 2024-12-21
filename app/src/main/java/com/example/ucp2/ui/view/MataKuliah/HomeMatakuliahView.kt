@@ -10,11 +10,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,14 +31,59 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.data.entity.Matakuliah
-import com.example.ucp2.ui.viewmodel.dosen.HomeUiState
-import com.example.ucp2.ui.viewmodel.matakuliah.homeMKUiState
+import com.example.ucp2.ui.viewmodel.matakuliah.HomeMKUiState
+import com.example.ucp2.ui.viewmodel.matakuliah.MataKuliahViewModel
+import com.example.ucp2.ui.viewmodel.matakuliah.PenyediaMatakuliahViewModel
 import kotlinx.coroutines.launch
+
+
+@Composable
+fun HomeMatakuliahView(
+    viewModel: MataKuliahViewModel = viewModel(factory = PenyediaMatakuliahViewModel.Factory),
+    onDetailClick: (String) -> Unit,
+    onAddMK: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
+    Scaffold(
+        topBar = {
+            com.example.ucp2.ui.costumwidget.TopAppBar(
+                judul = "Daftar Matakuliah",
+                showBackButton = false,
+                onBack = {},
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onAddMK,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Tambah Mahasiswa",
+                )
+            }
+        }
+    ) { innerPadding ->
+        val homeUiState by viewModel.homeMKUiState.collectAsState()
+
+        BodyHomeMatakuliahView(
+            homeMKUiState = homeUiState,
+            onClick = {
+                onDetailClick(it)
+            },
+            modifier = Modifier.padding(innerPadding)
+        )
+    }
+}
+
 
 @Composable
 fun BodyHomeMatakuliahView(
-    homeMKUiState: homeMKUiState,  // Perubahan parameter dari HomeUiState (berdasarkan kode Anda sebelumnya)
+    homeMKUiState: HomeMKUiState,  // Perubahan parameter dari HomeUiState (berdasarkan kode Anda sebelumnya)
     onClick: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -109,6 +159,7 @@ fun ListMK(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardMK(
     MK: Matakuliah,
