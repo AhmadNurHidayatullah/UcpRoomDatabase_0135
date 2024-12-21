@@ -12,14 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
 fun HomeView(
-    onNavigateToDosen: () -> Unit,
-    onNavigateToMatakuliah: () -> Unit,
+    onClickDosen: () -> Unit,
+    onClickMatakuliah: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -45,7 +44,7 @@ fun HomeView(
             icon = Icons.Filled.Person,
             iconColor = Color.Black,
             backgroundColor = Color.Cyan,
-            onClick = onNavigateToDosen
+            onClick = onClickDosen
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -56,7 +55,7 @@ fun HomeView(
             icon = Icons.Filled.AccountBox,
             iconColor = Color.Blue,
             backgroundColor = Color.Cyan,
-            onClick = onNavigateToMatakuliah
+            onClick = onClickMatakuliah
         )
     }
 }
